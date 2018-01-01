@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="140dp"
+    android:layout_height="240dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginVertical="8dp"
+    android:background="@color/white"
+    android:elevation="@dimen/card_elevation_small">
+
+      <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/movieImage"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:scaleType="fitXY"
+        fresco:placeholderImage="@drawable/filled_rectangle" />
+
+         <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+             android:background="@drawable/bg_rectangle"
+
+             android:paddingHorizontal="4dp"
+             android:paddingVertical="2dp"
+             android:elevation="4dp"
+
+             android:layout_alignBottom="@+id/movieImage"
+             android:layout_alignRight="@+id/movieImage"
+             android:layout_margin="8dp">
+             <!--<TextView-->
+                 <!--android:layout_width="wrap_content"-->
+                 <!--android:layout_height="match_parent"-->
+                 <!--android:layout_gravity="end"-->
+                 <!--android:gravity="right"-->
+                 <!--android:id="@+id/isMovieAdult"-->
+                 <!--android:text="UA"-->
+                 <!--android:textColor="@color/white"-->
+                 <!--android:textAllCaps="true"/>-->
+              <LinearLayout
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                  android:layout_gravity="center"
+                  android:alpha="1"
+
+                  android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/favIcon"
+                        android:paddingTop="2dp"
+                        android:paddingRight="4dp"
+
+                        android:layout_margin="2dp"
+
+                        android:src="@drawable/like_16"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/vote_avg_tv"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/movie_title"
+                        android:textStyle="bold"
+                        android:text="78%" />
+
+              </LinearLayout>
+              <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/vote_no_tv"
+                  android:textColor="@color/white"
+                  android:textSize="12sp"
+                  android:text="1022 votes" />
+        </LinearLayout>
+
+
+
+           <LinearLayout
+               android:layout_below="@+id/movieImage"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+
+               android:layout_margin="4dp"
+               android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:id="@+id/movieTitle"
+                    android:text="Title"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/movie_title"
+                   />
+
+               <TextView
+                   android:id="@+id/movieReleaseDate"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+
+                   android:textSize="10sp"
+                   android:text="Nov,12 2017" />
+           </LinearLayout>
+
+
+
+
+
+</RelativeLayout>

@@ -19,6 +19,7 @@ import android.widget.Toolbar;
 import com.example.tanvi.moviemania.Adapters.MyPagerAdapter;
 import com.example.tanvi.moviemania.R;
 import com.example.tanvi.moviemania.fragments.MoviesTab;
+import com.facebook.drawee.backends.pipeline.Fresco;
 
 public class MainActivity extends AppCompatActivity implements MoviesTab.OnFragmentInteractionListener {
 
@@ -48,11 +49,18 @@ public class MainActivity extends AppCompatActivity implements MoviesTab.OnFragm
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Fresco.initialize(this);
+
+
+
+
         TabLayout tabLayout=findViewById(R.id.tabLayout);
         TabLayout.Tab moviesTab=tabLayout.newTab();
         TabLayout.Tab seriesTab=tabLayout.newTab();
         moviesTab.setText("MOVIES");
         seriesTab.setText("TV SHOWS");
+
+
 
         //moviesTab.setCustomView(R.layout.tab_layout);
         //View view=LayoutInflater.from(MainActivity.this).inflate(R.layout.tab_layout,null);
