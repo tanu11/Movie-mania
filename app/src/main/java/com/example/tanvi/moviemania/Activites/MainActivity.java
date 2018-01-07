@@ -8,13 +8,15 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewParent;
 import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toolbar;
+
+
 
 import com.example.tanvi.moviemania.Adapters.MyPagerAdapter;
 import com.example.tanvi.moviemania.R;
@@ -24,6 +26,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 public class MainActivity extends AppCompatActivity implements MoviesTab.OnFragmentInteractionListener {
 
     private TextView mTextMessage;
+    public static  String api_key ="cd458af3e465c915faedf516d4f513c0";
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -50,6 +53,9 @@ public class MainActivity extends AppCompatActivity implements MoviesTab.OnFragm
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Fresco.initialize(this);
+        Toolbar toolbar=findViewById(R.id.mainActivityToolbar);
+        toolbar.setTitle("Movie Mania");
+        setSupportActionBar(toolbar);
 
 
 

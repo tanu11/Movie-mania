@@ -2,6 +2,7 @@ package com.example.tanvi.moviemania.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,9 +13,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tanvi.moviemania.Activites.AboutAMovieActivity;
 import com.example.tanvi.moviemania.Activites.DisplayActivity;
+import com.example.tanvi.moviemania.Activites.MoreAboutActivity;
 import com.example.tanvi.moviemania.Adapters.GenreAdapter;
 import com.example.tanvi.moviemania.Adapters.LessMovieDetailAdapter;
 import com.example.tanvi.moviemania.Networking.ApiClient;
@@ -24,6 +28,7 @@ import com.example.tanvi.moviemania.Templates.GenreCover;
 import com.example.tanvi.moviemania.Templates.MovieDetail;
 import com.example.tanvi.moviemania.Templates.MovieDetailCover;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -31,7 +36,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.content.ContentValues.TAG;
-import static com.example.tanvi.moviemania.Activites.DisplayActivity.api_key;
+import static com.example.tanvi.moviemania.Activites.MainActivity.api_key;
 
 
 public class MoviesTab extends Fragment {
@@ -96,7 +101,7 @@ public class MoviesTab extends Fragment {
         genreRecyclerView.setHasFixedSize(true);
 
         genreAdapter=new GenreAdapter(genreArrayList);
-        movieDetailAdapter=new LessMovieDetailAdapter(popularMovieArrayList);
+        movieDetailAdapter=new LessMovieDetailAdapter(popularMovieArrayList,1);
 
 
         genreLayoutManager=new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
@@ -112,12 +117,35 @@ public class MoviesTab extends Fragment {
         movieRecyclerView.setAdapter(movieDetailAdapter);
 
 
-        getDataForRecyclerViews();
-        movieRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+        movieRecyclerView.addOnItemTouchListener(new LessMovieDetailAdapter.RecyclerTouchListener(getContext(),movieRecyclerView, new LessMovieDetailAdapter.ClickListener() {
             @Override
             public void onClick(View view, int position) {
+                MovieDetail movie = popularMovieArrayList.get(position);
+                Toast.makeText(getContext(),  movie.getTitle()+" is selected!", Toast.LENGTH_SHORT).show();
+                Intent i=new Intent(getContext(), AboutAMovieActivity.class);
+                i.putExtra("movieId",popularMovieArrayList.get(position).getId());
+                startActivity(i);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
 
             }
+        }));
+
+
+        getDataForRecyclerViews();
+        TextView morePopMovies=view.findViewById(R.id.morePopMovies);
+        morePopMovies.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(getActivity(), MoreAboutActivity.class);
+                Bundle b=new Bundle();
+                b.putSerializable("MovieList",(Serializable)popularMovieArrayList);
+                i.putExtra("bundle",b);
+                startActivity(i);
+            }
+        });
 
         return view;
 
@@ -180,7 +208,7 @@ public class MoviesTab extends Fragment {
 
 
                 Log.i(TAG+" popularMovies", "onResponse: "+genreArrayList.get(0).getName());
-                Toast.makeText(getActivity(),response.body().toString(),Toast.LENGTH_LONG).show();
+               // Toast.makeText(getActivity(),response.body().toString(),Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -206,7 +234,7 @@ public class MoviesTab extends Fragment {
 
                MovieDetailCover movieDetailCover=response.body();
                popularMovieArrayList=movieDetailCover.getMovieDetails();
-                movieDetailAdapter=new LessMovieDetailAdapter(popularMovieArrayList);
+                movieDetailAdapter=new LessMovieDetailAdapter(popularMovieArrayList,1);
                 movieRecyclerView.setAdapter(movieDetailAdapter);
 
 

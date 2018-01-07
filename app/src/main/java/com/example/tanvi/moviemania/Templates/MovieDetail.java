@@ -1,10 +1,12 @@
 package com.example.tanvi.moviemania.Templates;
 
+import java.io.Serializable;
+
 /**
  * Created by tanvi on 30-12-2017.
  */
 
-public class MovieDetail {
+public class MovieDetail implements Serializable {
 
     private String title,overview,original_language,release_date,backdrop_path,poster_path;
     private int vote_count,id;

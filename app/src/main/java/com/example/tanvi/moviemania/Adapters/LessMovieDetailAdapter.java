@@ -1,8 +1,11 @@
 package com.example.tanvi.moviemania.Adapters;
 
+import android.content.Context;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -23,14 +26,21 @@ import java.util.Date;
 
 public class LessMovieDetailAdapter extends RecyclerView.Adapter<LessMovieDetailAdapter.MovieViewHolder> {
     private ArrayList<MovieDetail> movieDetailArrayList;
+    int layoutId;
 
-    public LessMovieDetailAdapter(ArrayList<MovieDetail> movieDetailArrayList) {
+    public LessMovieDetailAdapter(ArrayList<MovieDetail> movieDetailArrayList,int layoutId) {
         this.movieDetailArrayList = movieDetailArrayList;
+        this.layoutId=layoutId;
     }
 
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemview= LayoutInflater.from(parent.getContext()).inflate(R.layout.less_movie_detail,parent,false);
+        View itemview;
+        if(layoutId==1)
+        itemview= LayoutInflater.from(parent.getContext()).inflate(R.layout.less_movie_detail,parent,false);
+        else
+        itemview= LayoutInflater.from(parent.getContext()).inflate(R.layout.less_movie_detail_2,parent,false);
+
         return new MovieViewHolder(itemview);
 
     }
@@ -83,6 +93,48 @@ public class LessMovieDetailAdapter extends RecyclerView.Adapter<LessMovieDetail
             movieImage=itemView.findViewById(R.id.movieImage);
             //movieIsAdult=itemView.findViewById(R.id.isMovieAdult);
 
+
+        }
+    }
+    public interface ClickListener {
+        void onClick(View view, int position);
+
+        void onLongClick(View view, int position);
+    }
+
+    public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener
+    {   private GestureDetector gestureDetector;
+        private ClickListener clickListener;
+
+        public RecyclerTouchListener(Context context,final RecyclerView recyclerView, final ClickListener clickListener)
+        {
+            this.clickListener = clickListener;
+            gestureDetector=new GestureDetector(context,new GestureDetector.SimpleOnGestureListener()
+            {       @Override
+                  public boolean onSingleTapUp(MotionEvent e) {
+                      return true;
+                  }
+
+            });
+        }
+
+        @Override
+        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+            View child = rv.findChildViewUnder(e.getX(), e.getY());
+            if (child != null && clickListener != null && gestureDetector.onTouchEvent(e)) {
+                clickListener.onClick(child, rv.getChildAdapterPosition(child));
+            }
+            return false;
+        }
+
+        @Override
+        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+
+        }
+
+        @Override
+        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
         }
     }
