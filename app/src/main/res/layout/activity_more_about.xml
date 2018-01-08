@@ -17,15 +17,22 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
     </android.support.v7.widget.Toolbar>
-    <android.support.v7.widget.RecyclerView
+    <com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/moreAboutToolbar"
-        android:layout_centerHorizontal="true"
+        android:id="@+id/moreAboutSwipeRefresh"
+        android:layout_below="@+id/moreAboutToolbar">
+           <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_centerHorizontal="true"
 
 
-        android:id="@+id/moreMovies">
+            android:id="@+id/moreMovies">
 
-    </android.support.v7.widget.RecyclerView>
+       </android.support.v7.widget.RecyclerView>
+    </com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayout>
+
 
 </RelativeLayout>

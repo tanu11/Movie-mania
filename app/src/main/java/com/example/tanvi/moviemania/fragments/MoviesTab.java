@@ -141,8 +141,13 @@ public class MoviesTab extends Fragment {
             public void onClick(View v) {
                 Intent i=new Intent(getActivity(), MoreAboutActivity.class);
                 Bundle b=new Bundle();
+
+                // 1.popular movie  2.upcoming movies 3.top rated 4.now playing
+
                 b.putSerializable("MovieList",(Serializable)popularMovieArrayList);
+                b.putInt("movieType",1);
                 i.putExtra("bundle",b);
+
                 startActivity(i);
             }
         });

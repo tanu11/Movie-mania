@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity implements MoviesTab.OnFragm
 
 
 
-
         TabLayout tabLayout=findViewById(R.id.tabLayout);
         TabLayout.Tab moviesTab=tabLayout.newTab();
         TabLayout.Tab seriesTab=tabLayout.newTab();
