@@ -5,8 +5,8 @@ package com.example.tanvi.moviemania.Templates;
  */
 
 public class Genre {
-    public int id;
-    public String name;
+    private int id;
+    private String name;
 
     public int getId() {
         return id;

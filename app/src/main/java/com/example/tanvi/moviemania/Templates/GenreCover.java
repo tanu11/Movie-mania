@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class GenreCover {
    @SerializedName("genres")
-    public ArrayList<Genre> GenreList;
+    private ArrayList<Genre> GenreList;
 
     public ArrayList<Genre> getGenreList() {
         return GenreList;

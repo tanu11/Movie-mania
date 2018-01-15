@@ -12,7 +12,7 @@
         android:id="@+id/movieImage"
         android:layout_width="match_parent"
         android:layout_height="190dp"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         fresco:placeholderImage="@drawable/bg_rectangle" />
 
     <LinearLayout

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class MovieDetailCover {
 
     @SerializedName("results")
-    ArrayList<MovieDetail> movieDetails;
+    private ArrayList<MovieDetail> movieDetails;
 
     public ArrayList<MovieDetail> getMovieDetails() {
         return movieDetails;

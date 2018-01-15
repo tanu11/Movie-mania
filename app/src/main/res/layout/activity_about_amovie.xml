@@ -45,4 +45,11 @@
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        tools:layout_editor_absoluteY="224dp">
+
+
+    </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

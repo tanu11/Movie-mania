@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/left_margin_small">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:text="This is movie title"
+        android:id="@+id/eMovieTitle"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="tagline"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"
+        android:layout_below="@+id/eMovieTitle"
+        android:id="@+id/eMovieTagline"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/eReleaseDate"
+        android:text="2017"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:layout_below="@+id/eMovieTagline"
+        android:layout_alignParentLeft="true"/>
+
+    <TextView
+        android:layout_width="1dp"
+        android:layout_height="16dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:id="@+id/eline1"
+
+        android:layout_alignBaseline="@+id/eReleaseDate"
+        android:layout_alignBottom="@+id/eReleaseDate"
+
+        android:layout_toEndOf="@+id/eReleaseDate"
+        android:layout_toRightOf="@+id/eReleaseDate"
+        android:background="@color/colorPrimary" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/eRuntime"
+        android:text="1hr 45 min"
+        android:layout_alignBaseline="@+id/eReleaseDate"
+        android:layout_alignBottom="@+id/eReleaseDate"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_toEndOf="@+id/eline1"
+        android:layout_toRightOf="@+id/eline1"/>
+    <TextView
+        android:layout_width="1dp"
+        android:layout_height="16dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:id="@+id/eline2"
+
+        android:layout_alignBaseline="@+id/eReleaseDate"
+        android:layout_alignBottom="@+id/eReleaseDate"
+
+        android:layout_toEndOf="@+id/eRuntime"
+        android:layout_toRightOf="@+id/eRuntime"
+        android:background="@color/colorPrimary" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/eStatus"
+        android:text="Released"
+
+        android:textColor="@color/black"
+        android:layout_alignBaseline="@+id/eReleaseDate"
+        android:layout_alignBottom="@+id/eReleaseDate"
+        android:textSize="16sp"
+        android:layout_toEndOf="@+id/eline2"
+        android:layout_toRightOf="@+id/eline2"/>
+
+    <ImageView
+        android:layout_marginTop="8dp"
+        android:padding="2dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eReleaseDate"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/like_24"
+        android:id="@+id/like"
+      />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_toEndOf="@+id/like"
+        android:layout_toRightOf="@+id/like"
+        android:layout_alignTop="@+id/like"
+        android:layout_marginLeft="5dp"
+
+        android:text="73%"
+        android:textSize="20sp" />
+
+
+
+</RelativeLayout>

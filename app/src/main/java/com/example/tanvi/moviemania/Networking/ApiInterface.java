@@ -1,9 +1,11 @@
 package com.example.tanvi.moviemania.Networking;
 
 import com.example.tanvi.moviemania.Activites.DisplayActivity;
+import com.example.tanvi.moviemania.Templates.Credits;
 import com.example.tanvi.moviemania.Templates.Genre;
 import com.example.tanvi.moviemania.Templates.GenreCover;
 import com.example.tanvi.moviemania.Templates.MovieCompleteDetail;
+import com.example.tanvi.moviemania.Templates.MovieDetail;
 import com.example.tanvi.moviemania.Templates.MovieDetailCover;
 
 import retrofit2.Call;
@@ -18,7 +20,16 @@ import retrofit2.http.Query;
 
 public interface ApiInterface {
 
-    @GET("genre/movie/{movieId}")
+    @GET("movie/{movieId}/recommendations")
+    Call<MovieDetailCover> getRecommendedMovies(@Path("movieId") int movieId, @Query("api_key") String api_key,@Query("page")int page);
+
+    @GET("movie/{movieId}/similar")
+    Call<MovieDetailCover> getSimilarMovies(@Path("movieId") int movieId, @Query("api_key") String api_key,@Query("page")int page);
+
+    @GET("movie/{movieId}/credits")
+    Call<Credits> getMovieCredits(@Path("movieId") int movieId, @Query("api_key") String api_key);
+
+    @GET("movie/{movieId}")
     Call<MovieCompleteDetail> getMovieById(@Path("movieId") int movieId, @Query("api_key") String api_key);
 
     @GET("genre/movie/list")

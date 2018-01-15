@@ -1,5 +1,6 @@
 package com.example.tanvi.moviemania.Activites;
 
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.tanvi.moviemania.Adapters.GenreAdapter;
@@ -82,6 +84,22 @@ public class MoreAboutActivity extends AppCompatActivity {
         movieRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         movieRecyclerView.setAdapter(movieDetailAdapter);
+
+        movieRecyclerView.addOnItemTouchListener(new LessMovieDetailAdapter.RecyclerTouchListener(this,movieRecyclerView, new LessMovieDetailAdapter.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                MovieDetail movie = movieArrayList.get(position);
+                Toast.makeText(MoreAboutActivity.this, movie.getTitle()+" is selected!", Toast.LENGTH_SHORT).show();
+                Intent i=new Intent(MoreAboutActivity.this, AboutAMovieActivity.class);
+                i.putExtra("movieId",movieArrayList.get(position).getId());
+                startActivity(i);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
 
         swipeToRefresh.setColorSchemeResources(R.color.colorAccent);
         swipeToRefresh.setDistanceToTriggerSync(100);
