@@ -11,4 +11,9 @@
     <string name="title_activity_about_amovie">AboutAMovieActivity</string>
 
     <string name="action_settings">Settings</string>
+    <string name="genre">Genre</string>
+    <string name="popular_movies">Popular Movies</string>
+    <string name="view_all">VIEW ALL</string>
+    <string name="upcoming_movies">Upcoming Movies</string>
+    <string name="Top_rated">Top Rated</string>
 </resources>

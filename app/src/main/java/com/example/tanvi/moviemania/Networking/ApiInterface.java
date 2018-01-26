@@ -20,6 +20,9 @@ import retrofit2.http.Query;
 
 public interface ApiInterface {
 
+
+
+
     @GET("movie/{movieId}/recommendations")
     Call<MovieDetailCover> getRecommendedMovies(@Path("movieId") int movieId, @Query("api_key") String api_key,@Query("page")int page);
 
@@ -37,5 +40,13 @@ public interface ApiInterface {
 
     @GET("movie/popular")
     Call<MovieDetailCover> getPopularMovie(@Query("api_key") String api_key, @Query("page")int page);
+
+    @GET("movie/upcoming")
+    Call<MovieDetailCover> getUpcomingMovie(@Query("api_key") String api_key, @Query("page")int page);
+
+    @GET("movie/top_rated")
+    Call<MovieDetailCover> getTopRatedMovie(@Query("api_key") String api_key, @Query("page")int page);
+
+
 
 }

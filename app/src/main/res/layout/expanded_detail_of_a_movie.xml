@@ -1,105 +1,215 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="@dimen/left_margin_small">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:textColor="@color/black"
-        android:text="This is movie title"
-        android:id="@+id/eMovieTitle"/>
+    android:background="@color/selected"
+    android:minHeight="1000dp"
+
+
+>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="tagline"
-        android:textSize="16sp"
-        android:layout_marginBottom="8dp"
+        android:paddingVertical="4dp"
+        android:text="Movie Title"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:id="@+id/eMovieTitle"
+        android:textSize="20sp"
+        android:textColor="@color/textcolor"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/eTagline"
+        android:layout_alignRight="@+id/eMovieTitle"
+        android:layout_alignLeft="@+id/eMovieTitle"
+        android:textSize="14sp"
+        android:textColor="@color/subtextcolor"
         android:layout_below="@+id/eMovieTitle"
-        android:id="@+id/eMovieTagline"/>
+        android:text="This is the tagline of the movie"/>
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/eReleaseDate"
-        android:text="2017"
-        android:textColor="@color/black"
+        android:layout_below="@+id/eTagline"
+        android:id="@+id/eGenre"
         android:textSize="16sp"
-        android:layout_below="@+id/eMovieTagline"
-        android:layout_alignParentLeft="true"/>
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_alignLeft="@+id/eMovieTitle"
+        android:text="Action | Adventure | Romance"
+        android:layout_marginTop="16dp"/>
 
     <TextView
-        android:layout_width="1dp"
-        android:layout_height="16dp"
-        android:layout_marginLeft="6dp"
-        android:layout_marginRight="6dp"
-        android:id="@+id/eline1"
 
-        android:layout_alignBaseline="@+id/eReleaseDate"
-        android:layout_alignBottom="@+id/eReleaseDate"
-
-        android:layout_toEndOf="@+id/eReleaseDate"
-        android:layout_toRightOf="@+id/eReleaseDate"
-        android:background="@color/colorPrimary" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/eRuntime"
-        android:text="1hr 45 min"
-        android:layout_alignBaseline="@+id/eReleaseDate"
-        android:layout_alignBottom="@+id/eReleaseDate"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:layout_toEndOf="@+id/eline1"
-        android:layout_toRightOf="@+id/eline1"/>
-    <TextView
-        android:layout_width="1dp"
-        android:layout_height="16dp"
-        android:layout_marginLeft="6dp"
-        android:layout_marginRight="6dp"
-        android:id="@+id/eline2"
-
-        android:layout_alignBaseline="@+id/eReleaseDate"
-        android:layout_alignBottom="@+id/eReleaseDate"
-
-        android:layout_toEndOf="@+id/eRuntime"
-        android:layout_toRightOf="@+id/eRuntime"
-        android:background="@color/colorPrimary" />
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/eStatus"
-        android:text="Released"
 
-        android:textColor="@color/black"
-        android:layout_alignBaseline="@+id/eReleaseDate"
-        android:layout_alignBottom="@+id/eReleaseDate"
+        android:layout_below="@+id/eGenre"
+        android:layout_marginTop="20dp"
+        android:paddingVertical="1dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="1 hr 34 min"
         android:textSize="16sp"
-        android:layout_toEndOf="@+id/eline2"
-        android:layout_toRightOf="@+id/eline2"/>
+        android:layout_alignLeft="@+id/eMovieTitle"
+       />
+    <TextView
+        android:id="@+id/eStatus"
+        android:paddingVertical="1dp"
+        android:textColor="@color/colorAccent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eRuntime"
+        android:layout_alignLeft="@+id/eMovieTitle"
+        android:textSize="16sp"
+        android:text="Released" />
+
+
+    <TextView
+        android:id="@+id/eIsAdult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/eOverViewTitle"
+        android:layout_alignTop="@+id/eRuntime"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@+id/eRuntime"
+
+        android:elevation="1dp"
+        android:layout_toRightOf="@+id/eRuntime"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:text="UA"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="1dp"
+        android:layout_height="48dp"
+        android:id="@+id/eline"
+        android:layout_alignTop="@+id/eRuntime"
+        android:layout_marginLeft="15dp"
+
+        android:layout_toEndOf="@+id/eIsAdult"
+        android:layout_toRightOf="@+id/eIsAdult"
+        android:background="@color/black"
+        android:layout_marginStart="15dp" />
 
     <ImageView
-        android:layout_marginTop="8dp"
-        android:padding="2dp"
+        android:id="@+id/eLike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/eReleaseDate"
-        android:layout_alignParentLeft="true"
-        android:src="@drawable/like_24"
-        android:id="@+id/like"
-      />
+        android:layout_alignTop="@+id/eline"
+        android:paddingTop="4dp"
+        android:layout_marginLeft="15dp"
+
+        android:layout_toEndOf="@+id/eline"
+        android:layout_toRightOf="@+id/eline"
+        android:src="@drawable/like_16" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/eRating"
+        android:layout_alignTop="@+id/eLike"
+        android:layout_marginLeft="6dp"
+        android:textColor="@color/black"
 
-        android:layout_toEndOf="@+id/like"
-        android:layout_toRightOf="@+id/like"
-        android:layout_alignTop="@+id/like"
-        android:layout_marginLeft="5dp"
+        android:layout_toEndOf="@+id/eLike"
+        android:layout_toRightOf="@+id/eLike"
+        android:text="76%"
+        android:textSize="16sp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eRating"
+        android:id="@+id/eVotes"
+        android:textColor="@color/colorPrimary"
+        android:layout_alignLeft="@+id/eLike"
+        android:layout_alignBaseline="@+id/eStatus"
+        android:textSize="16sp"
+        android:text="144404 Votes"/>
 
-        android:text="73%"
-        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/eOverViewTitle"
+        android:text="Overview"
+        android:textSize="18sp"
+        android:layout_alignLeft="@+id/eMovieTitle"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_below="@+id/eStatus"
+        android:layout_marginTop="20dp"/>
+
+
+    <TextView
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        android:layout_below="@+id/eOverViewTitle"
+        android:id="@+id/eOverView"
+        android:textSize="16sp"
+        android:layout_alignLeft="@+id/eMovieTitle"
+         android:textColor="@color/subtextcolor"
+        android:layout_marginTop="8dp"
+        android:text="Here comes the overview of the movie example ,n the Town of Derry, the local kids are disappearing one by one, leaving behind bloody remains. In a place known as 'The Barrens', a group of seven kids are united by their horrifying and strange encounters with an evil clown and their determination to kill It."/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/eCast"
+        android:text="Cast"
+        android:layout_alignLeft="@+id/eMovieTitle"
+
+        android:textSize="18sp"
+        android:layout_marginTop="12dp"
+        android:layout_below="@+id/eOverView"
+        android:textColor="@color/black"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/eCastRecyclerView"
+        android:layout_marginTop="8dp"
+
+        android:layout_below="@+id/eCast">
+
+
+
+
+    </android.support.v7.widget.RecyclerView>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/eCrew"
+        android:text="Crew"
+        android:layout_alignLeft="@+id/eMovieTitle"
+
+        android:textSize="18sp"
+        android:layout_marginTop="12dp"
+        android:layout_below="@+id/eCastRecyclerView"
+        android:textColor="@color/black"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/eCrewRecyclerView"
+        android:layout_marginTop="8dp"
+
+        android:layout_below="@+id/eCrew">
+
+
+    </android.support.v7.widget.RecyclerView>
+
+
 
 
 

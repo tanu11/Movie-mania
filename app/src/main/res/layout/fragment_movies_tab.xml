@@ -1,35 +1,34 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/selected"
-    android:orientation="vertical"
+    android:isScrollContainer="false"
+    android:fitsSystemWindows="true"
+
+
+
 
     tools:context="com.example.tanvi.moviemania.fragments.MoviesTab">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
 
-            >
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-               >
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="1000dp"
+    android:scrollbars="vertical"
+    android:background="@color/selected"
+    >
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     android:layout_marginTop="16dp"
-                    android:text="Genre"
+                    android:text="@string/genre"
+                    android:id="@+id/mtGenre"
+                    android:layout_alignParentLeft="true"
                     android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    android:textSize="18sp" android:layout_alignParentStart="true" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -37,7 +36,9 @@
                     android:id="@+id/moreGenre"
                     android:layout_marginHorizontal="8dp"
                     android:layout_marginTop="18dp"
-                    android:text="VIEW ALL"
+                    android:layout_alignBottom="@+id/mtGenre"
+
+                    android:text="@string/view_all"
                     android:paddingHorizontal="8dp"
                     android:paddingVertical="2dp"
                     android:layout_alignParentRight="true"
@@ -45,32 +46,34 @@
 
 
                     android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:layout_alignParentEnd="true"
+                    />
 
-            </RelativeLayout>
+
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/genreRecyclerView"
+                android:layout_below="@+id/mtGenre"
                 android:orientation="horizontal"
                 >
 
 
             </android.support.v7.widget.RecyclerView>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/mtPopularMovie"
                     android:layout_marginHorizontal="8dp"
                     android:layout_marginTop="16dp"
-                    android:text="Popular Movies"
+                    android:text="@string/popular_movies"
+                    android:layout_below="@+id/genreRecyclerView"
                     android:textColor="@color/black"
+
                     android:textSize="18sp" />
 
                 <TextView
@@ -79,30 +82,123 @@
                     android:layout_marginHorizontal="8dp"
                     android:layout_marginTop="18dp"
                     android:id="@+id/morePopMovies"
-                    android:text="VIEW ALL"
+                    android:text="@string/view_all"
+                    android:layout_alignBottom="@+id/mtPopularMovie"
                     android:paddingHorizontal="8dp"
                     android:paddingVertical="2dp"
+
                     android:layout_alignParentRight="true"
                     android:background="@drawable/rectangle"
 
 
                     android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:textSize="12sp" android:layout_alignParentEnd="true" />
 
-            </RelativeLayout>
+
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/mtPopularMovie"
+
                 android:id="@+id/popularMovieRecyclerView"
                 android:orientation="horizontal"
-                >
+                ></android.support.v7.widget.RecyclerView>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mtUpcomingMovie"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/upcoming_movies"
+        android:layout_below="@+id/popularMovieRecyclerView"
+        android:textColor="@color/black"
+
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="18dp"
+        android:id="@+id/moreUpcomingMovies"
+        android:text="@string/view_all"
+        android:layout_alignBottom="@+id/mtUpcomingMovie"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="2dp"
+
+        android:layout_alignParentRight="true"
+        android:background="@drawable/rectangle"
+
+
+        android:textColor="@color/black"
+        android:textSize="12sp" android:layout_alignParentEnd="true" />
+
+
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mtUpcomingMovie"
+
+        android:id="@+id/upcomingMovieRecyclerView"
+        android:orientation="horizontal"
+        >
 
 
             </android.support.v7.widget.RecyclerView>
-        </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mtTopRated"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/Top_rated"
+        android:layout_below="@+id/upcomingMovieRecyclerView"
+        android:textColor="@color/black"
+
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="18dp"
+        android:id="@+id/moreOfType1"
+        android:text="@string/view_all"
+        android:layout_alignBottom="@+id/mtTopRated"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="2dp"
+
+        android:layout_alignParentRight="true"
+        android:background="@drawable/rectangle"
 
 
-    </ScrollView>
+        android:textColor="@color/black"
+        android:textSize="12sp" android:layout_alignParentEnd="true" />
 
-</LinearLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mtUpcomingMovie"
+
+        android:id="@+id/MovieType1"
+        android:orientation="horizontal"
+        >
+
+
+    </android.support.v7.widget.RecyclerView>
+
+
+
+
+</RelativeLayout>
+
+
+
+</android.support.v4.widget.NestedScrollView>

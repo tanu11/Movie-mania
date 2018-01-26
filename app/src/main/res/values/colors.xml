@@ -7,6 +7,7 @@
     <color name="blue">#4ad1f2</color>
     <color name="red">#e92c2c</color>
     <color name="pink">#d60e3d</color>
+    <color name="lightPink">#f24d74</color>
     <color name="orange">#f49126</color>
     <color name="yellow">#efdc09</color>
     <color name="lightblue">#49acd5</color>
@@ -16,6 +17,6 @@
     <color name="black">#000000</color>
     <color name="selected">#ECEFF1</color>
     <color name="darkselected">#bcbfc1</color>
-    <color name="subtextcolor">#919191</color>
+    <color name="subtextcolor">#67676d</color>
     <color name="textcolor">#000000</color>
 </resources>

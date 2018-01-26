@@ -91,7 +91,7 @@ public class MoreAboutActivity extends AppCompatActivity {
                 MovieDetail movie = movieArrayList.get(position);
                 Toast.makeText(MoreAboutActivity.this, movie.getTitle()+" is selected!", Toast.LENGTH_SHORT).show();
                 Intent i=new Intent(MoreAboutActivity.this, AboutAMovieActivity.class);
-                i.putExtra("movieId",movieArrayList.get(position).getId());
+                i.putExtra("MovieDetail",movie);
                 startActivity(i);
             }
 

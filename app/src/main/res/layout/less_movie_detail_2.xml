@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="190dp"
         android:scaleType="centerCrop"
-        fresco:placeholderImage="@drawable/bg_rectangle" />
+        fresco:placeholderImage="@color/selected" />
 
     <LinearLayout
         android:layout_width="wrap_content"
