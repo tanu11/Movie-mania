@@ -4,8 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/selected"
-
     tools:context="com.example.tanvi.moviemania.Activites.MoreAboutActivity">
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"

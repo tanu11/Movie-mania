@@ -15,24 +15,27 @@
         <activity
             android:name=".Activites.MainActivity"
             android:configChanges="orientation|screenSize"
-            android:theme="@style/AppTheme"
-            android:label="@string/title_activity_main">
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme">
+
+        </activity>
+        <activity
+            android:name=".Activites.AboutAMovieActivity"
+            android:label="@string/title_activity_about_amovie"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Activites.MoreAboutActivity"
+            android:theme="@style/AppTheme"></activity>
+        <activity android:name=".Activites.TempActivity"
+            android:theme="@style/AppTheme">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Activites.AboutAMovieActivity"
-            android:label="@string/title_activity_about_amovie"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".Activites.MoreAboutActivity"
-          android:theme="@style/AppTheme"
 
-
-         >
-        </activity>
     </application>
 
 </manifest>

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -23,9 +24,9 @@ import com.example.tanvi.moviemania.R;
 import com.example.tanvi.moviemania.fragments.MoviesTab;
 import com.facebook.drawee.backends.pipeline.Fresco;
 
-public class MainActivity extends AppCompatActivity implements MoviesTab.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements MoviesTab.OnFragmentInteractionListener, MyPagerAdapter.InitaliseFragmentInterface {
 
-    private TextView mTextMessage;
+
     public static  String api_key ="cd458af3e465c915faedf516d4f513c0";
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements MoviesTab.OnFragm
         tabLayout.addTab(seriesTab,1);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         final ViewPager viewPager=findViewById(R.id.viewPager);
-        PagerAdapter adapter=new MyPagerAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
+        PagerAdapter adapter=new MyPagerAdapter(getSupportFragmentManager(),tabLayout.getTabCount(),this);
         viewPager.setAdapter(adapter);
         viewPager.setOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -110,5 +111,10 @@ public class MainActivity extends AppCompatActivity implements MoviesTab.OnFragm
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public Fragment getFrag(int Position) {
+        return null;
     }
 }

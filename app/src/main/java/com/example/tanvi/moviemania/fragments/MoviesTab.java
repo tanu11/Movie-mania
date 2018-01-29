@@ -87,6 +87,8 @@ public class MoviesTab extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        getDataForRecyclerViews();
+
 
 
 
@@ -166,7 +168,6 @@ public class MoviesTab extends Fragment {
 
 
 
-        getDataForRecyclerViews();
         TextView morePopMovies=view.findViewById(R.id.morePopMovies);
         morePopMovies.setOnClickListener(new View.OnClickListener() {
             @Override

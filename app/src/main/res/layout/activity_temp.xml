@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.example.tanvi.moviemania.Activites.TempActivity">
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mainActivityToolbar"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:titleTextColor="@color/white"
+
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+    </android.support.v7.widget.Toolbar>
+    <FrameLayout
+        android:layout_marginTop="?attr/actionBarSize"
+        android:background="@color/selected"
+        android:id="@+id/bottomNavFrameLayout"
+        android:minHeight="1000dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></FrameLayout>
+
+
+
+    <!--<fragment-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/fragmentOfTemp"-->
+        <!--android:layout_marginTop="?attr/actionBarSize"-->
+        <!--android:name="com.example.tanvi.moviemania.fragments.FavFragment"-->
+     <!--&gt;</fragment>-->
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+
+        app:itemIconTint="@color/bottom_nav_icon_selection"
+        app:itemTextColor="@color/bottom_nav_icon_selection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_gravity="bottom"
+        android:background="?android:attr/windowBackground"
+
+        app:menu="@menu/navigation" />
+
+</android.support.design.widget.CoordinatorLayout>

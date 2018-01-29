@@ -40,6 +40,4 @@ dependencies {
     compile 'com.github.omadahealth:swipy:1.2.3@aar'
 
 
-
-
 }
