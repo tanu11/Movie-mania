@@ -52,6 +52,13 @@ public class MoviesTab extends Fragment {
     private ArrayList<MovieDetail> upcomingMovieList=new ArrayList<>();
 
 
+    private ArrayList<ArrayList<MovieDetail>> allTypesOfMovies=new ArrayList<ArrayList<MovieDetail>>();
+    private ArrayList<LessMovieDetailAdapter> allMovieAdapter;
+    private ArrayList<RecyclerView.LayoutManager> allMovieLayoutManager;
+    private ArrayList<RecyclerView> allMovieRecyclerView;
+    private int noOfMovieType,iteratingMovie;
+
+
     private GenreAdapter genreAdapter;
     private LessMovieDetailAdapter movieDetailAdapter,upcomingMovieAdapter;
 
@@ -66,6 +73,24 @@ public class MoviesTab extends Fragment {
 
     public MoviesTab() {
         // Required empty public constructor
+        noOfMovieType=1;
+        ArrayList<MovieDetail> temp=new ArrayList<>();
+
+        allTypesOfMovies=new ArrayList<ArrayList<MovieDetail>>();
+        for(int i=0;i<noOfMovieType;i++)
+            allTypesOfMovies.add(temp);
+
+
+        allMovieAdapter=new ArrayList<>();
+        allMovieLayoutManager=new ArrayList<>();
+        allMovieRecyclerView=new ArrayList<>();
+
+
+
+
+
+
+
     }
 
 
@@ -103,13 +128,49 @@ public class MoviesTab extends Fragment {
         genreRecyclerView = (RecyclerView) view.findViewById(R.id.genreRecyclerView);
         movieRecyclerView=(RecyclerView) view.findViewById(R.id.popularMovieRecyclerView);
         upcomingMovieRecyclerView=view.findViewById(R.id.upcomingMovieRecyclerView);
+        allMovieRecyclerView.add((RecyclerView) view.findViewById(R.id.MovieType1));
+
         movieRecyclerView.setHasFixedSize(true);
         genreRecyclerView.setHasFixedSize(true);
         upcomingMovieRecyclerView.setHasFixedSize(true);
 
+
+        for(int iteratingMovie=0;iteratingMovie<noOfMovieType;iteratingMovie++) {
+            allMovieRecyclerView.get(iteratingMovie).setHasFixedSize(true);
+            allMovieAdapter.add(new LessMovieDetailAdapter(allTypesOfMovies.get(iteratingMovie),1));
+            allMovieLayoutManager.add(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+            allMovieRecyclerView.get(iteratingMovie).setLayoutManager(allMovieLayoutManager.get(iteratingMovie));
+            allMovieRecyclerView.get(iteratingMovie).setItemAnimator(new DefaultItemAnimator());
+            allMovieRecyclerView.get(iteratingMovie).setAdapter(allMovieAdapter.get(iteratingMovie));
+            final ArrayList<MovieDetail> list=allTypesOfMovies.get(iteratingMovie);
+
+            allMovieRecyclerView.get(iteratingMovie).addOnItemTouchListener(new LessMovieDetailAdapter.RecyclerTouchListener(getContext(), allMovieRecyclerView.get(iteratingMovie), new LessMovieDetailAdapter.ClickListener() {
+
+
+
+                @Override
+                public void onClick(View view, int position) {
+
+//                    MovieDetail movie = list.get(position);
+                Toast.makeText(getContext(),  list.size()+" is selected!", Toast.LENGTH_SHORT).show();
+//                    Intent i=new Intent(getContext(), AboutAMovieActivity.class);
+//                    // i.putExtra("movieId",popularMovieArrayList.get(position).getId());
+//                    i.putExtra("MovieDetail",(Serializable)movie);
+//                    startActivity(i);
+
+                }
+
+                @Override
+                public void onLongClick(View view, int position) {
+
+                }
+            }));
+        }
         genreAdapter=new GenreAdapter(genreArrayList);
         movieDetailAdapter=new LessMovieDetailAdapter(popularMovieArrayList,1);
         upcomingMovieAdapter=new LessMovieDetailAdapter(upcomingMovieList,1);
+
+
 
 
         genreLayoutManager=new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
@@ -202,6 +263,16 @@ public class MoviesTab extends Fragment {
             }
         });
 
+
+
+
+
+
+
+
+
+
+
         return view;
 
 
@@ -243,6 +314,7 @@ public class MoviesTab extends Fragment {
         getGenre();
         getPopularMovie();
         getUpcomingMovies();
+        getTopRatedMovies();
 
 
 
@@ -343,6 +415,42 @@ public class MoviesTab extends Fragment {
                 Log.i(TAG, "onFailure: "+t.getMessage());
             }
         });
+
+    }
+    private void getTopRatedMovies()
+    {
+       final int identifier=0;
+        Call<MovieDetailCover> call= ApiClient.getInterface().getTopRatedMovie(api_key,1);
+        call.enqueue(new Callback<MovieDetailCover>() {
+
+            @Override
+            public void onResponse(Call<MovieDetailCover> call, Response<MovieDetailCover> response) {
+
+                if(response.isSuccessful()) {
+
+                    MovieDetailCover movieDetailCover = response.body();
+                    allTypesOfMovies.get(identifier).addAll( movieDetailCover.getMovieDetails());
+                    Toast.makeText(getContext(),allTypesOfMovies.get(identifier).size()+" size",Toast.LENGTH_SHORT).show();
+
+                    allMovieAdapter.set(identifier, new LessMovieDetailAdapter(allTypesOfMovies.get(identifier), 1));
+                    allMovieRecyclerView.get(identifier).setAdapter(allMovieAdapter.get(identifier));
+
+
+                    Log.i(TAG, "onResponse: Top Rated" + response.body().getMovieDetails().toString());
+
+                }
+                else
+                    Toast.makeText(getContext(),"no top rated",Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onFailure(Call<MovieDetailCover> call, Throwable t) {
+
+                Log.i(TAG, "onFailure: "+t.getMessage());
+            }
+        });
+
 
     }
 

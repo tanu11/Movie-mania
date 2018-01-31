@@ -11,11 +11,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 
-import com.example.tanvi.moviemania.Adapters.MyPagerAdapter;
 import com.example.tanvi.moviemania.R;
-import com.example.tanvi.moviemania.Templates.BottomNavigationViewPager;
 import com.example.tanvi.moviemania.fragments.FavFragment;
 import com.example.tanvi.moviemania.fragments.HomeFragment;
 import com.example.tanvi.moviemania.fragments.UserInfoFragment;
