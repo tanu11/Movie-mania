@@ -27,6 +27,17 @@
         android:layout_height="wrap_content"></FrameLayout>
 
 
+    <!--<com.example.tanvi.moviemania.Templates.BottomNavigationViewPager-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:id="@+id/bottomBarViewpager"-->
+        <!--android:minHeight="500dp"-->
+        <!--android:layout_marginBottom="?attr/actionBarSize"-->
+        <!--android:layout_marginTop="?attr/actionBarSize"-->
+        <!--android:layout_height="wrap_content">-->
+
+    <!--</com.example.tanvi.moviemania.Templates.BottomNavigationViewPager>-->
+
+
 
     <!--<fragment-->
         <!--android:layout_width="match_parent"-->

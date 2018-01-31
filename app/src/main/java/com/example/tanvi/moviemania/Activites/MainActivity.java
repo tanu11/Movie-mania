@@ -38,10 +38,10 @@ public class MainActivity extends AppCompatActivity implements MoviesTab.OnFragm
                 case R.id.navigation_home:
 
                     return true;
-                case R.id.navigation_dashboard:
+                case R.id.navigation_fav:
 
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_user_info:
 
                     return true;
             }

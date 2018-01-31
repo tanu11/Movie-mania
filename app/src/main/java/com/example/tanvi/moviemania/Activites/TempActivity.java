@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.FrameLayout;
 
 import com.example.tanvi.moviemania.Adapters.MyPagerAdapter;
 import com.example.tanvi.moviemania.R;
+import com.example.tanvi.moviemania.Templates.BottomNavigationViewPager;
 import com.example.tanvi.moviemania.fragments.FavFragment;
 import com.example.tanvi.moviemania.fragments.HomeFragment;
 import com.example.tanvi.moviemania.fragments.UserInfoFragment;
@@ -24,6 +26,7 @@ import java.util.ArrayList;
 public class TempActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener,UserInfoFragment.OnFragmentInteractionListener,FavFragment.OnFragmentInteractionListener {
 
     public static  String api_key ="cd458af3e465c915faedf516d4f513c0";
+    BottomNavigationView navigation;
 
     private ArrayList<Fragment> bottomBarList=new ArrayList<>();
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -37,13 +40,13 @@ public class TempActivity extends AppCompatActivity implements HomeFragment.OnFr
 
 
                     return true;
-                case R.id.navigation_dashboard:
-                    switchFragment(1);
+                case R.id.navigation_fav:
+                switchFragment(1);
 
 
                     return true;
-                case R.id.navigation_notifications:
-                   switchFragment(2);
+                case R.id.navigation_user_info:
+                switchFragment(2);
 
                     return true;
             }
@@ -61,33 +64,58 @@ public class TempActivity extends AppCompatActivity implements HomeFragment.OnFr
         toolbar.setTitle("Movie Mania");
         setSupportActionBar(toolbar);
 
+//
+//        BottomNavigationViewPager viewPager=findViewById(R.id.bottomBarViewpager);
+//        viewPager.setPagingEnabled(false);
+//        MyPagerAdapter myPagerAdapter=new MyPagerAdapter(getSupportFragmentManager(),3,this);
+        navigation = (BottomNavigationView) findViewById(R.id.navigation);
 
-
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         addFragmentsInBottomBar();
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+
         switchFragment(0);
 
 
     }
 
     private void addFragmentsInBottomBar() {
-        bottomBarList.add(new HomeFragment());
-        bottomBarList.add(new FavFragment());
-        bottomBarList.add(new UserInfoFragment());
+        bottomBarList.add(getFrag(0));
+        bottomBarList.add(getFrag(1));
+        bottomBarList.add(getFrag(2));
     }
+
+
     private void switchFragment(int pos) {
 
-        Log.i("Onswitchfragment","inside "+pos);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        Log.i("Onswitchfragment","inside "+pos);
+//        FragmentManager manager= getSupportFragmentManager();
+//        Fragment fr=getSupportFragmentManager().findFragmentById(R.id.bottomNavFrameLayout);
+//        if(fr!=null)
+//            Log.i("fragment In", "switchFragment: "+fr.getClass());
+//        else
+//            Log.i("fragment In", "switchFragment: null");
+//
+//        FragmentTransaction transaction=manager.beginTransaction();
+//
+//        transaction.replace(R.id.bottomNavFrameLayout,bottomBarList.get(pos) ).addToBackStack(null);
+//        transaction.commit();
+        Fragment fragment=bottomBarList.get(pos);
+        String backStateName =  fragment.getClass().getName();
+        String fragmentTag = backStateName;
 
-// Replace whatever is in the fragment_container view with this fragment,
-// and add the transaction to the back stack so the user can navigate back
-        transaction.replace(R.id.bottomNavFrameLayout, bottomBarList.get(pos));
-        transaction.addToBackStack(null);
+        FragmentManager manager = getSupportFragmentManager();
+        boolean fragmentPopped = manager.popBackStackImmediate (backStateName, 0);
 
-// Commit the transaction
-        transaction.commit();
+        if (!fragmentPopped && manager.findFragmentByTag(fragmentTag) == null){ //fragment not in back stack, create it.
+            FragmentTransaction ft = manager.beginTransaction();
+            ft.replace(R.id.bottomNavFrameLayout, fragment, fragmentTag);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.addToBackStack(backStateName);
+            ft.commit();
+        }
+
+
     }
 
     @Override
@@ -131,5 +159,42 @@ public class TempActivity extends AppCompatActivity implements HomeFragment.OnFr
 
         }
     }
+
+
+    @Override
+    public void onBackPressed() {
+
+        if (getSupportFragmentManager().getBackStackEntryCount() ==1){
+          finish();
+        }
+        else {
+
+
+            super.onBackPressed();
+            Fragment fr=getSupportFragmentManager().findFragmentById(R.id.bottomNavFrameLayout);
+            if(fr!=null) {
+                Log.i("Curremt frag", "onBackPressed: " + fr.getClass());
+                if(fr instanceof UserInfoFragment)
+                { navigation.setSelectedItemId(R.id.navigation_user_info);
+
+                }
+                else if (fr instanceof FavFragment )
+                {
+                    navigation.setSelectedItemId(R.id.navigation_fav);
+                }
+                else
+                {
+                    navigation.setSelectedItemId(R.id.navigation_home);
+                }
+
+
+            }
+
+
+
+
+        }
+    }
+
 }
 
