@@ -30,7 +30,7 @@
     <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="49dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:theme="@style/Theme.Design.Light.NoActionBar"
         android:id="@+id/viewPager">

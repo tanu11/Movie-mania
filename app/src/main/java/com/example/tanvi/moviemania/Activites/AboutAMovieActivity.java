@@ -1,5 +1,6 @@
 package com.example.tanvi.moviemania.Activites;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -35,6 +36,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.w3c.dom.Text;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -46,8 +48,12 @@ import static com.example.tanvi.moviemania.Activites.MainActivity.api_key;
 public class AboutAMovieActivity extends AppCompatActivity {
   private int movieId;
   private MovieCompleteDetail movieCompleteDetail;
-  private ArrayList<MovieDetail> recommendedMovies=new ArrayList<>();
-  private ArrayList<MovieDetail> similarMovies=new ArrayList<>();
+
+  private ArrayList<ArrayList<MovieDetail>> sAndRMovieList=new ArrayList<>();
+  private ArrayList<LessMovieDetailAdapter> sAndRMovieAdapter=new ArrayList<>();
+  private ArrayList<RecyclerView> sAndRMovieRecyclerView=new ArrayList<>();
+  private ArrayList<LinearLayoutManager> sAndRMovieLayoutManager=new ArrayList<>();
+  private int noOfMovieList=2;
   private ArrayList<Cast> castArrayList=new ArrayList<>();
   private RecyclerView castRecyclerView;
   private RecyclerView.LayoutManager castlayoutManager;
@@ -56,6 +62,7 @@ public class AboutAMovieActivity extends AppCompatActivity {
   private RecyclerView crewRecyclerView;
   private RecyclerView.LayoutManager crewlayoutManager;
   private CrewAdapter crewAdapter;
+
 
 
     private CollapsingToolbarLayout collapsingToolbarLayout;
@@ -67,6 +74,15 @@ public class AboutAMovieActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
+
+
+        for (int i = 0; i < noOfMovieList; i++){
+            sAndRMovieList.add(new ArrayList<MovieDetail>());
+            sAndRMovieAdapter.add(null);
+            sAndRMovieLayoutManager.add(null);
+
+        }
+
         collapsingToolbarLayout=findViewById(R.id.toolbar_layout);
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
         castRecyclerView=findViewById(R.id.eCastRecyclerView);
@@ -117,6 +133,45 @@ public class AboutAMovieActivity extends AppCompatActivity {
         crewRecyclerView.setItemAnimator(new DefaultItemAnimator());
         crewAdapter =new CrewAdapter(crewArrayList);
         crewRecyclerView.setAdapter(crewAdapter);
+        sAndRMovieRecyclerView.add((RecyclerView) findViewById(R.id.eRecommendedMoviesRecyclerView));
+        sAndRMovieRecyclerView.add((RecyclerView) findViewById(R.id.eSimilarMoviesRecyclerView));
+
+
+        for(int iteratingMovie=0;iteratingMovie<noOfMovieList;iteratingMovie++) {
+            sAndRMovieRecyclerView.get(iteratingMovie).setHasFixedSize(true);
+            sAndRMovieAdapter.set(iteratingMovie,new LessMovieDetailAdapter(sAndRMovieList.get(iteratingMovie),1));
+            sAndRMovieLayoutManager.set(iteratingMovie,new LinearLayoutManager(AboutAMovieActivity.this,LinearLayoutManager.HORIZONTAL,false));
+            sAndRMovieRecyclerView.get(iteratingMovie).setLayoutManager(sAndRMovieLayoutManager.get(iteratingMovie));
+            sAndRMovieRecyclerView.get(iteratingMovie).setItemAnimator(new DefaultItemAnimator());
+            sAndRMovieRecyclerView.get(iteratingMovie).setAdapter(sAndRMovieAdapter.get(iteratingMovie));
+            final ArrayList<MovieDetail> list=sAndRMovieList.get(iteratingMovie);
+
+
+
+            sAndRMovieRecyclerView.get(iteratingMovie).addOnItemTouchListener(new LessMovieDetailAdapter.RecyclerTouchListener(AboutAMovieActivity.this, sAndRMovieRecyclerView.get(iteratingMovie), new LessMovieDetailAdapter.ClickListener() {
+
+
+
+                @Override
+                public void onClick(View view, int position) {
+
+                    MovieDetail movie = list.get(position);
+//                Toast.makeText(getContext(),  list.size()+" is selected!", Toast.LENGTH_SHORT).show();
+                    Intent i=new Intent(AboutAMovieActivity.this, AboutAMovieActivity.class);
+                    i.putExtra("movieId",movie.getId());
+                    i.putExtra("MovieDetail",(Serializable)movie);
+                    startActivity(i);
+
+                }
+
+                @Override
+                public void onLongClick(View view, int position) {
+
+                }
+            }));
+        }
+
+
 
 
         getMovieCompleteDetail();
@@ -133,13 +188,18 @@ public class AboutAMovieActivity extends AppCompatActivity {
     }
 
     private void getSimilarMovies() {
+
+
         Call<MovieDetailCover> call =ApiClient.getInterface().getSimilarMovies(movieId,api_key,1);
         call.enqueue(new Callback<MovieDetailCover>() {
+            int index=0;
             @Override
             public void onResponse(Call<MovieDetailCover> call, Response<MovieDetailCover> response) {
                 if(response.isSuccessful())
                 {
-                     similarMovies=response.body().getMovieDetails();
+                     sAndRMovieList.get(index).addAll(response.body().getMovieDetails());
+                     sAndRMovieAdapter.set(index, new LessMovieDetailAdapter(sAndRMovieList.get(index), 1));
+                     sAndRMovieRecyclerView.get(index).setAdapter(sAndRMovieAdapter.get(index));
 
                 }
                 else
@@ -158,15 +218,25 @@ public class AboutAMovieActivity extends AppCompatActivity {
     private void getRecommendations() {
        Call<MovieDetailCover> call=ApiClient.getInterface().getRecommendedMovies(movieId,api_key,1);
        call.enqueue(new Callback<MovieDetailCover>() {
+           int index=1;
            @Override
            public void onResponse(Call<MovieDetailCover> call, Response<MovieDetailCover> response) {
-               if (response.isSuccessful())
-               recommendedMovies=response.body().getMovieDetails();
+               if (response.isSuccessful()) {
+
+                   sAndRMovieList.get(index).addAll(response.body().getMovieDetails());
+                   sAndRMovieAdapter.set(index, new LessMovieDetailAdapter(sAndRMovieList.get(index), 1));
+                   sAndRMovieRecyclerView.get(index).setAdapter(sAndRMovieAdapter.get(index));
+
+               }
+               else
+                   Toast.makeText(AboutAMovieActivity.this,"no result",Toast.LENGTH_SHORT).show();
 
            }
 
+
            @Override
            public void onFailure(Call<MovieDetailCover> call, Throwable t) {
+               Toast.makeText(AboutAMovieActivity.this,"No Internet Connection",Toast.LENGTH_SHORT).show();
 
            }
        });

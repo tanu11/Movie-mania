@@ -47,6 +47,11 @@ public interface ApiInterface {
     @GET("movie/top_rated")
     Call<MovieDetailCover> getTopRatedMovie(@Query("api_key") String api_key, @Query("page")int page);
 
+    @GET("movie/now_playing")
+    Call<MovieDetailCover> getNowPlayingMovie(@Query("api_key") String api_key, @Query("page")int page);
+
+
+
 
 
 }

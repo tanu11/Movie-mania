@@ -4,10 +4,6 @@
     android:layout_height="wrap_content"
     android:isScrollContainer="false"
     android:fitsSystemWindows="true"
-
-
-
-
     tools:context="com.example.tanvi.moviemania.fragments.MoviesTab">
 
 <RelativeLayout
@@ -15,8 +11,9 @@
     android:layout_height="wrap_content"
     android:minHeight="900dp"
     android:scrollbars="vertical"
-    android:background="@color/selected"
-    >
+    android:background="@color/selected">
+
+
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -25,6 +22,7 @@
                     android:layout_marginTop="16dp"
                     android:text="@string/genre"
                     android:id="@+id/mtGenre"
+
                     android:layout_alignParentLeft="true"
                     android:textColor="@color/black"
                     android:textSize="18sp" android:layout_alignParentStart="true" />
@@ -57,10 +55,7 @@
                 android:id="@+id/genreRecyclerView"
                 android:layout_below="@+id/mtGenre"
                 android:orientation="horizontal"
-                >
-
-
-            </android.support.v7.widget.RecyclerView>
+                />
 
 
                 <TextView
@@ -102,7 +97,7 @@
 
                 android:id="@+id/popularMovieRecyclerView"
                 android:orientation="horizontal"
-                ></android.support.v7.widget.RecyclerView>
+                />
 
 
     <TextView
@@ -188,16 +183,53 @@
 
         android:id="@+id/MovieType1"
         android:orientation="horizontal"
-        >
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mtNowPlaying"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Now Playing"
+        android:layout_below="@+id/MovieType1"
+        android:textColor="@color/black"
+
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="18dp"
+        android:id="@+id/moreOfNowPlaying"
+        android:text="@string/view_all"
+        android:layout_alignBottom="@+id/mtNowPlaying"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="2dp"
+
+        android:layout_alignParentRight="true"
+        android:background="@drawable/rectangle"
 
 
-    </android.support.v7.widget.RecyclerView>
+        android:textColor="@color/black"
+        android:textSize="12sp" android:layout_alignParentEnd="true" />
 
 
-<View
-    android:layout_width="match_parent"
-    android:layout_height="90dp"
-    android:layout_below="@+id/MovieType1"></View>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mtNowPlaying"
+
+        android:id="@+id/nowPlayingRecyclerView"
+        android:orientation="horizontal"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@id/nowPlayingRecyclerView"/>
+
 
 </RelativeLayout>
 

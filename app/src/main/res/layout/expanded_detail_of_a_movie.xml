@@ -208,6 +208,86 @@
 
 
     </android.support.v7.widget.RecyclerView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/eRecommendedMovies"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Recommended Movies"
+        android:layout_below="@+id/eCrewRecyclerView"
+        android:textColor="@color/black"
+
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="18dp"
+        android:id="@+id/eMoreOfRecommendedMovie"
+        android:text="@string/view_all"
+        android:layout_alignBottom="@+id/eRecommendedMovies"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="2dp"
+
+        android:layout_alignParentRight="true"
+        android:background="@drawable/rectangle"
+
+
+        android:textColor="@color/black"
+        android:textSize="12sp" android:layout_alignParentEnd="true" />
+
+
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eRecommendedMovies"
+
+        android:id="@+id/eRecommendedMoviesRecyclerView"
+        android:orientation="horizontal"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/eSimilarMovies"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Similar Movies"
+        android:layout_below="@+id/eRecommendedMoviesRecyclerView"
+        android:textColor="@color/black"
+
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="18dp"
+        android:id="@+id/eMoreOfSimilarMovie"
+        android:text="@string/view_all"
+        android:layout_alignBottom="@+id/eSimilarMovies"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="2dp"
+
+        android:layout_alignParentRight="true"
+        android:background="@drawable/rectangle"
+
+
+        android:textColor="@color/black"
+        android:textSize="12sp" android:layout_alignParentEnd="true" />
+
+
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eSimilarMovies"
+
+        android:id="@+id/eSimilarMoviesRecyclerView"
+        android:orientation="horizontal"
+        />
 
 
 

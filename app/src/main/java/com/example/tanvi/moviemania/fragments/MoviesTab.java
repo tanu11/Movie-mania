@@ -3,6 +3,8 @@ package com.example.tanvi.moviemania.fragments;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -29,6 +31,7 @@ import com.example.tanvi.moviemania.Templates.MovieDetail;
 import com.example.tanvi.moviemania.Templates.MovieDetailCover;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -48,22 +51,22 @@ public class MoviesTab extends Fragment {
     private Context context;
 
     private ArrayList<Genre> genreArrayList=new ArrayList<>();
-    private ArrayList<MovieDetail> popularMovieArrayList=new ArrayList<>();
-    private ArrayList<MovieDetail> upcomingMovieList=new ArrayList<>();
-
-
-    private ArrayList<ArrayList<MovieDetail>> allTypesOfMovies=new ArrayList<ArrayList<MovieDetail>>();
-    private ArrayList<LessMovieDetailAdapter> allMovieAdapter;
-    private ArrayList<RecyclerView.LayoutManager> allMovieLayoutManager;
-    private ArrayList<RecyclerView> allMovieRecyclerView;
-    private int noOfMovieType,iteratingMovie;
-
-
     private GenreAdapter genreAdapter;
-    private LessMovieDetailAdapter movieDetailAdapter,upcomingMovieAdapter;
+    private RecyclerView genreRecyclerView;
+    private RecyclerView.LayoutManager genreLayoutManager;
 
-    private RecyclerView genreRecyclerView,movieRecyclerView,upcomingMovieRecyclerView;
-    private RecyclerView.LayoutManager genreLayoutManager,popMovieLayoutManager,upcomingMovieLayoutManager;
+
+
+    private int noOfMovieType=4;
+
+    private ArrayList<ArrayList<MovieDetail>> allTypesOfMovies=new ArrayList<>(noOfMovieType);
+    private ArrayList<LessMovieDetailAdapter> allMovieAdapter=new ArrayList<>(noOfMovieType);
+    private ArrayList<RecyclerView.LayoutManager> allMovieLayoutManager=new ArrayList<>();
+    private ArrayList<RecyclerView> allMovieRecyclerView=new ArrayList<>(noOfMovieType);
+    private ArrayList<TextView> allMoreTextViews=new ArrayList<>();
+
+
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -73,36 +76,9 @@ public class MoviesTab extends Fragment {
 
     public MoviesTab() {
         // Required empty public constructor
-        noOfMovieType=1;
-        ArrayList<MovieDetail> temp=new ArrayList<>();
 
-        allTypesOfMovies=new ArrayList<ArrayList<MovieDetail>>();
-        for(int i=0;i<noOfMovieType;i++)
-            allTypesOfMovies.add(temp);
+           }
 
-
-        allMovieAdapter=new ArrayList<>();
-        allMovieLayoutManager=new ArrayList<>();
-        allMovieRecyclerView=new ArrayList<>();
-
-
-
-
-
-
-
-    }
-
-
-//    // TODO: Rename and change types and number of parameters
-//    public static MoviesTab newInstance(String param1, String param2) {
-//        MoviesTab fragment = new MoviesTab();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -112,7 +88,21 @@ public class MoviesTab extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+
+
+        for(int i=0;i<noOfMovieType;i++) {
+            allTypesOfMovies.add(new ArrayList<MovieDetail>());
+            allMovieRecyclerView.add(null);
+            allMovieLayoutManager.add(null);
+            allMovieAdapter.add(null);
+        }
+
+
+
+
+
         getDataForRecyclerViews();
+        Log.i("check", "onCreateView: insidr on create");
 
 
 
@@ -125,24 +115,35 @@ public class MoviesTab extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_movies_tab, container, false);
 
-        genreRecyclerView = (RecyclerView) view.findViewById(R.id.genreRecyclerView);
-        movieRecyclerView=(RecyclerView) view.findViewById(R.id.popularMovieRecyclerView);
-        upcomingMovieRecyclerView=view.findViewById(R.id.upcomingMovieRecyclerView);
-        allMovieRecyclerView.add((RecyclerView) view.findViewById(R.id.MovieType1));
 
-        movieRecyclerView.setHasFixedSize(true);
+        genreRecyclerView = (RecyclerView) view.findViewById(R.id.genreRecyclerView);
+
+        allMovieRecyclerView.set(0,(RecyclerView) view.findViewById(R.id.popularMovieRecyclerView));
+        allMovieRecyclerView.set(1,(RecyclerView) view.findViewById(R.id.upcomingMovieRecyclerView));
+        allMovieRecyclerView.set(2,(RecyclerView) view.findViewById(R.id.MovieType1));
+        allMovieRecyclerView.set(3,(RecyclerView) view.findViewById(R.id.nowPlayingRecyclerView));
+
+
         genreRecyclerView.setHasFixedSize(true);
-        upcomingMovieRecyclerView.setHasFixedSize(true);
+        genreAdapter=new GenreAdapter(genreArrayList);
+        genreLayoutManager=new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
+        genreRecyclerView.setLayoutManager(genreLayoutManager);
+        genreRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        genreRecyclerView.setAdapter(genreAdapter);
+
+
 
 
         for(int iteratingMovie=0;iteratingMovie<noOfMovieType;iteratingMovie++) {
             allMovieRecyclerView.get(iteratingMovie).setHasFixedSize(true);
-            allMovieAdapter.add(new LessMovieDetailAdapter(allTypesOfMovies.get(iteratingMovie),1));
-            allMovieLayoutManager.add(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+            allMovieAdapter.set(iteratingMovie,new LessMovieDetailAdapter(allTypesOfMovies.get(iteratingMovie),1));
+            allMovieLayoutManager.set(iteratingMovie,new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
             allMovieRecyclerView.get(iteratingMovie).setLayoutManager(allMovieLayoutManager.get(iteratingMovie));
             allMovieRecyclerView.get(iteratingMovie).setItemAnimator(new DefaultItemAnimator());
             allMovieRecyclerView.get(iteratingMovie).setAdapter(allMovieAdapter.get(iteratingMovie));
             final ArrayList<MovieDetail> list=allTypesOfMovies.get(iteratingMovie);
+            if(list==null)
+            Log.i(TAG, "onCreateView: "+"NULL");
 
             allMovieRecyclerView.get(iteratingMovie).addOnItemTouchListener(new LessMovieDetailAdapter.RecyclerTouchListener(getContext(), allMovieRecyclerView.get(iteratingMovie), new LessMovieDetailAdapter.ClickListener() {
 
@@ -151,12 +152,12 @@ public class MoviesTab extends Fragment {
                 @Override
                 public void onClick(View view, int position) {
 
-//                    MovieDetail movie = list.get(position);
-                Toast.makeText(getContext(),  list.size()+" is selected!", Toast.LENGTH_SHORT).show();
-//                    Intent i=new Intent(getContext(), AboutAMovieActivity.class);
-//                    // i.putExtra("movieId",popularMovieArrayList.get(position).getId());
-//                    i.putExtra("MovieDetail",(Serializable)movie);
-//                    startActivity(i);
+                    MovieDetail movie = list.get(position);
+//                Toast.makeText(getContext(),  list.size()+" is selected!", Toast.LENGTH_SHORT).show();
+                    Intent i=new Intent(getContext(), AboutAMovieActivity.class);
+                    i.putExtra("movieId",movie.getId());
+                    i.putExtra("MovieDetail",(Serializable)movie);
+                    startActivity(i);
 
                 }
 
@@ -166,105 +167,34 @@ public class MoviesTab extends Fragment {
                 }
             }));
         }
-        genreAdapter=new GenreAdapter(genreArrayList);
-        movieDetailAdapter=new LessMovieDetailAdapter(popularMovieArrayList,1);
-        upcomingMovieAdapter=new LessMovieDetailAdapter(upcomingMovieList,1);
+
+        allMoreTextViews.add((TextView) view.findViewById(R.id.morePopMovies));
+        allMoreTextViews.add((TextView) view.findViewById(R.id.moreUpcomingMovies));
+        allMoreTextViews.add((TextView) view.findViewById(R.id.moreOfType1));
+        allMoreTextViews.add((TextView) view.findViewById(R.id.moreOfNowPlaying));
+
+        for(int i=0;i<noOfMovieType;i++){
+            final ArrayList<MovieDetail> temp=allTypesOfMovies.get(i);
+            final int index=i;
+            allMoreTextViews.get(i).setOnClickListener(new View.OnClickListener() {
 
 
+                @Override
+                public void onClick(View v) {
+                    Intent intent=new Intent(getActivity(), MoreAboutActivity.class);
+                    Bundle b=new Bundle();
 
+                    // 1.popular movie  2.upcoming movies 3.top rated 4.now playing
 
-        genreLayoutManager=new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
-        popMovieLayoutManager =new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
-        upcomingMovieLayoutManager=new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
+                    b.putSerializable("MovieList",(Serializable)temp);
+                    b.putInt("movieType",index+1);
+                    intent.putExtra("bundle",b);
 
-        genreRecyclerView.setLayoutManager(genreLayoutManager);
-        genreRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                    startActivity(intent);
 
-        movieRecyclerView.setLayoutManager(popMovieLayoutManager);
-        movieRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        upcomingMovieRecyclerView.setLayoutManager(upcomingMovieLayoutManager);
-        upcomingMovieRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        genreRecyclerView.setAdapter(genreAdapter);
-        movieRecyclerView.setAdapter(movieDetailAdapter);
-        upcomingMovieRecyclerView.setAdapter(upcomingMovieAdapter);
-
-
-        movieRecyclerView.addOnItemTouchListener(new LessMovieDetailAdapter.RecyclerTouchListener(getContext(),movieRecyclerView, new LessMovieDetailAdapter.ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                MovieDetail movie = popularMovieArrayList.get(position);
-                Toast.makeText(getContext(),  movie.getTitle()+" is selected!", Toast.LENGTH_SHORT).show();
-                Intent i=new Intent(getContext(), AboutAMovieActivity.class);
-               // i.putExtra("movieId",popularMovieArrayList.get(position).getId());
-                i.putExtra("MovieDetail",(Serializable)popularMovieArrayList.get(position));
-                startActivity(i);
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-
-            }
-        }));
-
-
-
-        upcomingMovieRecyclerView.addOnItemTouchListener(new LessMovieDetailAdapter.RecyclerTouchListener(getContext(),upcomingMovieRecyclerView, new LessMovieDetailAdapter.ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                MovieDetail movie = upcomingMovieList.get(position);
-                Toast.makeText(getContext(),  movie.getTitle()+" is selected!", Toast.LENGTH_SHORT).show();
-                Intent i=new Intent(getContext(), AboutAMovieActivity.class);
-                // i.putExtra("movieId",popularMovieArrayList.get(position).getId());
-                i.putExtra("MovieDetail",(Serializable)upcomingMovieList.get(position));
-                startActivity(i);
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-
-            }
-        }));
-
-
-
-        TextView morePopMovies=view.findViewById(R.id.morePopMovies);
-        morePopMovies.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i=new Intent(getActivity(), MoreAboutActivity.class);
-                Bundle b=new Bundle();
-
-                // 1.popular movie  2.upcoming movies 3.top rated 4.now playing
-
-                b.putSerializable("MovieList",(Serializable)popularMovieArrayList);
-                b.putInt("movieType",1);
-                i.putExtra("bundle",b);
-
-                startActivity(i);
-            }
-        });
-
-        TextView moreUpcomingMovies=view.findViewById(R.id.moreUpcomingMovies);
-        moreUpcomingMovies.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i=new Intent(getActivity(), MoreAboutActivity.class);
-                Bundle b=new Bundle();
-
-                // 1.popular movie  2.upcoming movies 3.top rated 4.now playing
-
-                b.putSerializable("MovieList",(Serializable)upcomingMovieList);
-                b.putInt("movieType",2);
-                i.putExtra("bundle",b);
-
-                startActivity(i);
-            }
-        });
-
-
-
+                }
+            });
+        }
 
 
 
@@ -315,14 +245,7 @@ public class MoviesTab extends Fragment {
         getPopularMovie();
         getUpcomingMovies();
         getTopRatedMovies();
-
-
-
-
-
-
-
-
+        getNowPlayingMovies();
     }
 
 
@@ -370,11 +293,16 @@ public class MoviesTab extends Fragment {
 
             @Override
             public void onResponse(Call<MovieDetailCover> call, Response<MovieDetailCover> response) {
+                int identifier=0;
+                MovieDetailCover movieDetailCover=response.body();
 
-               MovieDetailCover movieDetailCover=response.body();
-               popularMovieArrayList=movieDetailCover.getMovieDetails();
-                movieDetailAdapter=new LessMovieDetailAdapter(popularMovieArrayList,1);
-                movieRecyclerView.setAdapter(movieDetailAdapter);
+                allTypesOfMovies.get(identifier).clear();
+
+                allTypesOfMovies.get(identifier).addAll( movieDetailCover.getMovieDetails());
+                Log.i(TAG, "onResponse: pop movie "+allTypesOfMovies.get(identifier).get(0).getTitle());
+
+                allMovieAdapter.set(identifier, new LessMovieDetailAdapter(allTypesOfMovies.get(identifier), 1));
+                allMovieRecyclerView.get(identifier).setAdapter(allMovieAdapter.get(identifier));
 
 
                 Log.i(TAG, "onResponse: "+response.body());
@@ -391,17 +319,20 @@ public class MoviesTab extends Fragment {
     }
     private void getUpcomingMovies() {
 
+
+
         Call<MovieDetailCover> call= ApiClient.getInterface().getUpcomingMovie(api_key,1);
         call.enqueue(new Callback<MovieDetailCover>() {
 
             @Override
             public void onResponse(Call<MovieDetailCover> call, Response<MovieDetailCover> response) {
-
+                 int identifier=1;
                 MovieDetailCover movieDetailCover=response.body();
-                upcomingMovieList=movieDetailCover.getMovieDetails();
+                allTypesOfMovies.get(identifier).clear();
+                allTypesOfMovies.get(identifier).addAll( movieDetailCover.getMovieDetails());
 
-                upcomingMovieAdapter=new LessMovieDetailAdapter(upcomingMovieList,1);
-                upcomingMovieRecyclerView.setAdapter(upcomingMovieAdapter);
+                allMovieAdapter.set(identifier, new LessMovieDetailAdapter(allTypesOfMovies.get(identifier), 1));
+                allMovieRecyclerView.get(identifier).setAdapter(allMovieAdapter.get(identifier));
 
 
 
@@ -419,7 +350,8 @@ public class MoviesTab extends Fragment {
     }
     private void getTopRatedMovies()
     {
-       final int identifier=0;
+
+
         Call<MovieDetailCover> call= ApiClient.getInterface().getTopRatedMovie(api_key,1);
         call.enqueue(new Callback<MovieDetailCover>() {
 
@@ -427,8 +359,9 @@ public class MoviesTab extends Fragment {
             public void onResponse(Call<MovieDetailCover> call, Response<MovieDetailCover> response) {
 
                 if(response.isSuccessful()) {
-
+                    int identifier=2;
                     MovieDetailCover movieDetailCover = response.body();
+                    allTypesOfMovies.get(identifier).clear();
                     allTypesOfMovies.get(identifier).addAll( movieDetailCover.getMovieDetails());
                     Toast.makeText(getContext(),allTypesOfMovies.get(identifier).size()+" size",Toast.LENGTH_SHORT).show();
 
@@ -437,6 +370,44 @@ public class MoviesTab extends Fragment {
 
 
                     Log.i(TAG, "onResponse: Top Rated" + response.body().getMovieDetails().toString());
+
+                }
+                else
+                    Toast.makeText(getContext(),"no top rated",Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onFailure(Call<MovieDetailCover> call, Throwable t) {
+
+                Log.i(TAG, "onFailure: "+t.getMessage());
+            }
+        });
+
+
+    }
+    private void getNowPlayingMovies()
+    {
+
+
+        Call<MovieDetailCover> call= ApiClient.getInterface().getNowPlayingMovie(api_key,1);
+        call.enqueue(new Callback<MovieDetailCover>() {
+
+            @Override
+            public void onResponse(Call<MovieDetailCover> call, Response<MovieDetailCover> response) {
+
+                if(response.isSuccessful()) {
+                    int identifier=3;
+                    MovieDetailCover movieDetailCover = response.body();
+                    allTypesOfMovies.get(identifier).clear();
+                    allTypesOfMovies.get(identifier).addAll( movieDetailCover.getMovieDetails());
+                    Toast.makeText(getContext(),allTypesOfMovies.get(identifier).size()+" size",Toast.LENGTH_SHORT).show();
+
+                    allMovieAdapter.set(identifier, new LessMovieDetailAdapter(allTypesOfMovies.get(identifier), 1));
+                    allMovieRecyclerView.get(identifier).setAdapter(allMovieAdapter.get(identifier));
+
+
+                    Log.i(TAG, "onResponse: now playing" + response.body().getMovieDetails().toString());
 
                 }
                 else
